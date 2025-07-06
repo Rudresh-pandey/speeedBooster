@@ -14,7 +14,7 @@ function createGrid(rows, cols, command) {
     const cell = document.createElement('div');
     cell.className = 'cell';
 
-    // First row: Top headers
+    // ye first row h
     if (i < 8) {
       const col = i;
       cell.id = `1-${col}`;
@@ -29,7 +29,7 @@ function createGrid(rows, cols, command) {
       }
     }
 
-    // First column: Left headers
+    // ye left coloum hai
     else if ((i - 1) % 7 === 0) {
       const row = Math.floor((i - 1) / 7) + 1;
       cell.id = `${i}-1`;
@@ -43,7 +43,7 @@ function createGrid(rows, cols, command) {
       cell.classList.add("no-interaction");
     }
 
-    // Inner grid cells with input
+    // ye input ke leye hai !!
     else {
       const row = Math.floor((i - 1) / 7);  // row 2–7 → index 1–6
       const col = (i - 1) % 7;              // col 2–7 → index 1–6
@@ -53,8 +53,8 @@ function createGrid(rows, cols, command) {
       const inputBox = document.createElement("input");
       inputBox.type = "number";
       inputBox.classList.add("answer-box");
-      inputBox.dataset.row = row - 1; // 0–5
-      inputBox.dataset.col = col - 1; // 0–5
+      inputBox.dataset.row = row - 1;
+      inputBox.dataset.col = col - 1; 
 
       cell.appendChild(inputBox);
     }
@@ -74,8 +74,8 @@ function checkAnswers() {
   const { topRow, leftCol, command } = window.currentGrid;
 
   document.querySelectorAll("input.answer-box").forEach(input => {
-    const row = parseInt(input.dataset.row); // 0 to 5
-    const col = parseInt(input.dataset.col); // 0 to 5
+    const row = parseInt(input.dataset.row); 
+    const col = parseInt(input.dataset.col); 
 
     let expected;
     const top = topRow[col];
@@ -92,7 +92,7 @@ function checkAnswers() {
     const userValue = parseInt(input.value);
     const parentCell = input.parentElement;
 
-    // Remove old span if any
+
     const oldSpan = parentCell.querySelector(".correct-answer");
     if (oldSpan) oldSpan.remove();
 
@@ -126,5 +126,5 @@ function multiplication() {
   createGrid(7, 7, input);
 }
 
-// Load default grid on page load
+// first load mai add aae ga
 createGrid(7, 7, input);
