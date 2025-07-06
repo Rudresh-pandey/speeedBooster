@@ -79,14 +79,16 @@ h1 {
   color: #721c24 !important;
 }
 
+
 .correct-answer {
   position: absolute;
-  bottom: 2px;
-  right: 4px;
+  bottom: 4px;
+  right: 6px;
   font-size: 10px;
-  color: #555;
+  color: #444;
   font-weight: bold;
 }
+
 
 .buttons {
   display: flex;
