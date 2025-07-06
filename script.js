@@ -14,7 +14,7 @@ function createGrid(rows, cols, command) {
     const cell = document.createElement('div');
     cell.className = 'cell';
 
-    // ye first row h
+    // Top row headers
     if (i < 8) {
       const col = i;
       cell.id = `1-${col}`;
@@ -29,7 +29,7 @@ function createGrid(rows, cols, command) {
       }
     }
 
-    // ye left coloum hai
+    // Left column headers
     else if ((i - 1) % 7 === 0) {
       const row = Math.floor((i - 1) / 7) + 1;
       cell.id = `${i}-1`;
@@ -43,10 +43,10 @@ function createGrid(rows, cols, command) {
       cell.classList.add("no-interaction");
     }
 
-    // ye input ke leye hai !!
+    // Inner input cells
     else {
-      const row = Math.floor((i - 1) / 7);  // row 2–7 → index 1–6
-      const col = (i - 1) % 7;              // col 2–7 → index 1–6
+      const row = Math.floor((i - 1) / 7);
+      const col = (i - 1) % 7;
 
       cell.id = `${row + 1}-${col + 1}`;
 
@@ -54,7 +54,7 @@ function createGrid(rows, cols, command) {
       inputBox.type = "number";
       inputBox.classList.add("answer-box");
       inputBox.dataset.row = row - 1;
-      inputBox.dataset.col = col - 1; 
+      inputBox.dataset.col = col - 1;
 
       cell.appendChild(inputBox);
     }
@@ -62,7 +62,7 @@ function createGrid(rows, cols, command) {
     grid.appendChild(cell);
   }
 
-  // Save values to check later
+  // Save for checking later
   window.currentGrid = {
     topRow,
     leftCol,
@@ -74,17 +74,17 @@ function checkAnswers() {
   const { topRow, leftCol, command } = window.currentGrid;
 
   document.querySelectorAll("input.answer-box").forEach(input => {
-    const row = parseInt(input.dataset.row); 
-    const col = parseInt(input.dataset.col); 
+    const row = parseInt(input.dataset.row);
+    const col = parseInt(input.dataset.col);
 
-    let expected;
     const top = topRow[col];
     const left = leftCol[row];
 
+    let expected;
     if (command === "ADD") {
       expected = top + left;
     } else if (command === "SUB") {
-      expected = Math.abs(left - top);
+      expected = Math.abs(left - top); // ✅ Always positive
     } else if (command === "MUL") {
       expected = top * left;
     }
@@ -92,22 +92,30 @@ function checkAnswers() {
     const userValue = parseInt(input.value);
     const parentCell = input.parentElement;
 
-
+    // Remove previous feedback
+    parentCell.classList.remove("correct", "wrong");
     const oldSpan = parentCell.querySelector(".correct-answer");
     if (oldSpan) oldSpan.remove();
 
     if (userValue === expected) {
       parentCell.classList.add("correct");
-      parentCell.classList.remove("wrong");
     } else {
-      parentCell.classList.remove("correct");
       parentCell.classList.add("wrong");
 
       const span = document.createElement("span");
       span.className = "correct-answer";
-      span.textContent = expected;
+      span.textContent = expected; // ✅ Only shows positive
       parentCell.appendChild(span);
     }
+  });
+}
+
+function clearGridInputs() {
+  document.querySelectorAll("input.answer-box").forEach(input => {
+    input.value = "";
+    input.parentElement.classList.remove("correct", "wrong");
+    const span = input.parentElement.querySelector(".correct-answer");
+    if (span) span.remove();
   });
 }
 
@@ -126,5 +134,4 @@ function multiplication() {
   createGrid(7, 7, input);
 }
 
-// first load mai add aae ga
-createGrid(7, 7, input);
+createGrid(7, 7, input); // load default on start
