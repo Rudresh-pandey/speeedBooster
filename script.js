@@ -84,7 +84,7 @@ function checkAnswers() {
     if (command === "ADD") {
       expected = top + left;
     } else if (command === "SUB") {
-      expected = left - top;
+      expected = Math.abs(left - top);
     } else if (command === "MUL") {
       expected = top * left;
     }
