@@ -14,7 +14,7 @@ function createGrid(rows, cols, command) {
     const cell = document.createElement('div');
     cell.className = 'cell';
 
-    // Top row headers
+    // first row ke numbers
     if (i < 8) {
       const col = i;
       cell.id = `1-${col}`;
@@ -29,7 +29,7 @@ function createGrid(rows, cols, command) {
       }
     }
 
-    // Left column headers
+    // first column ke numbers
     else if ((i - 1) % 7 === 0) {
       const row = Math.floor((i - 1) / 7) + 1;
       cell.id = `${i}-1`;
@@ -43,7 +43,6 @@ function createGrid(rows, cols, command) {
       cell.classList.add("no-interaction");
     }
 
-    // Inner input cells
     else {
       const row = Math.floor((i - 1) / 7);
       const col = (i - 1) % 7;
@@ -62,7 +61,6 @@ function createGrid(rows, cols, command) {
     grid.appendChild(cell);
   }
 
-  // Save for checking later
   window.currentGrid = {
     topRow,
     leftCol,
@@ -84,7 +82,7 @@ function checkAnswers() {
     if (command === "ADD") {
       expected = top + left;
     } else if (command === "SUB") {
-      expected = Math.abs(left - top); // ✅ Always positive
+      expected = Math.abs(left - top); 
     } else if (command === "MUL") {
       expected = top * left;
     }
@@ -104,7 +102,7 @@ function checkAnswers() {
 
       const span = document.createElement("span");
       span.className = "correct-answer";
-      span.textContent = expected; // ✅ Only shows positive
+      span.textContent = expected; 
       parentCell.appendChild(span);
     }
   });
@@ -133,5 +131,5 @@ function multiplication() {
   input = "MUL";
   createGrid(7, 7, input);
 }
-
-createGrid(7, 7, input); // load default on start
+// default mai input add rahega
+createGrid(7, 7, input);
